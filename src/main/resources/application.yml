@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: LangchainPractice
+
+gist:
+  host: https://gist.githubusercontent.com/mrbluesky0123
