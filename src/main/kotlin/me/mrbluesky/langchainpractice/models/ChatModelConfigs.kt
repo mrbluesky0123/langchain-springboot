@@ -2,6 +2,7 @@ package me.mrbluesky.langchainpractice.models
 
 import dev.langchain4j.model.anthropic.AnthropicChatModel
 import dev.langchain4j.model.chat.ChatModel
+import dev.langchain4j.model.chat.listener.ChatModelListener
 import dev.langchain4j.model.openai.OpenAiChatModel
 import dev.langchain4j.model.openai.OpenAiChatModelName
 import org.springframework.context.annotation.Bean
@@ -10,7 +11,8 @@ import org.springframework.core.env.Environment
 
 @Configuration
 class ChatModelConfigs(
-    val environment: Environment
+    val environment: Environment,
+    val chatModelListener: ChatModelListener
 ) {
 
     @Bean(name = ["openaiChatModel"])
@@ -33,6 +35,7 @@ class ChatModelConfigs(
         AnthropicChatModel.builder()
             .apiKey(environment.getProperty("ANTHROPIC_API_KEY"))
             .modelName("claude-3-5-sonnet-20240620")
+            .listeners(arrayListOf<ChatModelListener>(chatModelListener))
             .logRequests(true)
             .logResponses(true)
             .build()
